@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phelipe Quintes Snake Game</title>
+  <link rel="stylesheet" href="reset.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="game.css">
+  <style>
+    canvas {
+      border: 2px solid black;
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <canvas id="gameCanvas" width="500" height="400"></canvas>
+    <button id="startButton" class="btn">
+      <span>PLAY NOW</span>
+    </button>
+  </div>
+
+
+  <nav class="navegation">
+    <div class="navegation_container">
+        <ul class="navegation_list">
+            <li class="navegation_item">
+               <a class="navegation_link PQ" href="../index.html" >PQ</a>
+            </li>
+            <li class="navegation_item">
+                <a class="navegation_link" href="../works.html" >Work</a>
+            </li>
+            <li class="navegation_item">
+                <a class="navegation_link" href="../resume.html" >Resume</a>
+            </li>
+            <li class="navegation_item">
+                <a class="navegation_link" href="#">Templates</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+    <script>
+      const canvas = document.getElementById('gameCanvas');
+      const ctx = canvas.getContext('2d');
+
+      const screenWidth = canvas.width;
+      const screenHeight = canvas.height;
+
+      let snake = [{x: 45, y: 55}];
+      let snakeSize = 30;
+      let velocityX = 0;
+      let velocityY = 0;
+      let foodX = Math.floor(Math.random() * (screenWidth - 40)) + 20;
+      let foodY = Math.floor(Math.random() * (screenHeight - 40)) + 60;
+      let score = 0;
+      let gameOver = false;
+      let fps = 60;
+      let initVelocity = 4;
+      let snakeLength = 1;
+      let gameRunning = false;
+
+      document.addEventListener('keydown', changeDirection);
+
+      function changeDirection(event) {
+        if (event.key === 'ArrowRight') {
+          velocityX = initVelocity;
+          velocityY = 0;
+        }
+        if (event.key === 'ArrowLeft') {
+          velocityX = -initVelocity;
+          velocityY = 0;
+        }
+        if (event.key === 'ArrowUp') {
+          velocityY = -initVelocity;
+          velocityX = 0;
+        }
+        if (event.key === 'ArrowDown') {
+          velocityY = initVelocity;
+          velocityX = 0;
+        }
+      }
+
+      function drawSnake() {
+        ctx.fillStyle = '#abf518';
+        for (let i = 0; i < snake.length; i++) {
+          ctx.beginPath();
+          ctx.arc(snake[i].x, snake[i].y, snakeSize / 2, 0, 2 * Math.PI);
+          ctx.fill();
+        }
+      }
+
+      function drawFood() {
+        ctx.fillStyle = 'red';
+        ctx.beginPath();
+        ctx.arc(foodX, foodY, snakeSize / 2, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+
+      function update() {
+        if (!gameRunning) return;
+        
+        if (gameOver) {
+          ctx.fillStyle = 'black';
+          ctx.fillRect(0, 0, screenWidth, screenHeight);
+          ctx.fillStyle = 'red';
+          ctx.font = '55px Arial';
+          ctx.fillText('Try Again', 100, 250);
+
+          ctx.fillStyle = 'white';
+          ctx.fillText('Press Enter', 150, 350);
+
+          document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+              resetGame();
+            }
+          });
+          return;
+        }
+
+        let head = {x: snake[0].x + velocityX, y: snake[0].y + velocityY};
+
+        if (Math.abs(head.x - foodX) < snakeSize / 2 && Math.abs(head.y - foodY) < snakeSize / 2) {
+          score += 5;
+          foodX = Math.floor(Math.random() * (screenWidth - 40)) + 20;
+          foodY = Math.floor(Math.random() * (screenHeight - 40)) + 60;
+          snakeLength += 5;
+        }
+
+        snake.unshift(head);
+
+        if (snake.length > snakeLength) {
+          snake.pop();
+        }
+
+        for (let i = 1; i < snake.length; i++) {
+          if (snake[i].x === head.x && snake[i].y === head.y) {
+            gameOver = true;
+          }
+        }
+
+        if (head.x >= screenWidth) {
+          head.x = 0;
+        } else if (head.x < 0) {
+          head.x = screenWidth - snakeSize;
+        }
+
+        if (head.y >= screenHeight) {
+          head.y = 50;
+        } else if (head.y < 50) {
+          head.y = screenHeight - snakeSize;
+        }
+
+        ctx.clearRect(0, 0, screenWidth, screenHeight);
+
+        // placar
+        ctx.fillStyle = 'white';
+        ctx.font = '30px Arial';
+        ctx.fillText('Score: ' + score * 10, 10, 30);
+
+        // linha abaixo do score
+        ctx.strokeStyle = '#abf518';
+        ctx.lineWidth = 5;
+        ctx.beginPath();
+        ctx.moveTo(10, 35); // início da linha
+        ctx.lineTo(screenWidth - 10, 35); // fim da linha
+        ctx.stroke();
+
+        drawFood();
+        drawSnake();
+      }
+
+      function resetGame() {
+        snake = [{x: 45, y: 55}];
+        velocityX = 0;
+        velocityY = 0;
+        score = 0;
+        snakeLength = 1;
+        gameOver = false;
+        foodX = Math.floor(Math.random() * (screenWidth - 40)) + 20;
+        foodY = Math.floor(Math.random() * (screenHeight - 40)) + 60;
+        gameRunning = true;
+      }
+
+      function gameLoop() {
+        update();
+        setTimeout(gameLoop, 1000 / fps);
+      }
+
+      document.getElementById('startButton').addEventListener('click', function() {
+        gameRunning = true;
+      });
+
+      gameLoop();
+
+      // bordas do canvas na cor da cobra
+      canvas.style.border = '5px solid #abf518';
+      canvas.style.backgroundColor = 'transparent'; // fundo do canvas transparente
+
+
+    </script>
+
+
+<div id="particles-js"></div>
+
+<script src="../JS/particles.js"></script>
+<script src="../JS/particles.min.js"></script>
+<script src="../JS/app.js"></script>
+</body>
+</html>

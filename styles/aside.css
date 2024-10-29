@@ -1,0 +1,169 @@
+.profile{
+    flex: 0 0 340px;
+    height: 150vh;
+    border-right: 1px solid var(--border_color);
+    padding-top: 6em;
+    margin-left: 7rem;
+}
+
+.profile_pic {
+    width: 200px;
+    height: auto;
+    border-radius: 50%;
+    border: 0.5px solid var(--border_color);
+    transition: all 0.5s;
+    opacity: 1;
+    margin-top: 1em;
+    margin-bottom: 1.5em;
+}
+
+.profile_pic.fade-out {
+    opacity: 0;
+}
+
+.profile_pic.fade-in {
+    opacity: 1;
+}
+
+.profile_about{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.profile_title{
+    font-size: 30px;
+    line-height: 35px;
+    font-weight: 700;
+}
+
+.profile_text{
+    line-height: 25px;
+}
+
+.profile_text b{
+    color: #abf518;
+    font-weight: 500;
+}
+
+.profile_social{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.profile_social-media-in{
+    width: 32.5px;
+    height: auto;
+    border: 1px solid gray;
+    border-radius: 5px;
+    background-color: rgba(43, 41, 41, 0.63);
+    padding: 0.4rem;
+}
+
+.profile_social-media{
+    width: 35px;
+    height: auto;
+    border: 1px solid gray;
+    border-radius: 5px;
+    background-color: rgba(43, 41, 41, 0.63);
+    padding: 0.4rem;
+}
+
+.profile_social_link{
+    text-transform: uppercase;
+    text-decoration: none;
+    color: black;
+    font-size: 15px;
+    background-color: white;
+    padding: 0.8em 2em;
+    border-radius: 10px;
+    transition: 0.5s ease;
+}
+
+.profile_social_link:hover,
+:focus {
+  color: #ffffff;
+  background: #abf518;
+  border: 1px solid #abf518;
+  text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 20px #ffffff;
+  box-shadow: 0 0 5px #abf518, 0 0 20px #abf518, 0 0 50px #abf518,
+    0 0 100px #abf518;
+}
+
+.profile_clock{
+    display: flex;
+    flex-direction: column;
+}
+
+.clock-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 5rem;
+}
+  
+#clock {
+    font-size: 38px;
+}
+
+.clock_title{
+    font-size: 15px;
+    font-size: 500;
+}
+
+.games_text{
+    font-size: 14px;
+    color: var(--border_color);
+}
+
+.control{
+    width: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-top: 1em;
+}
+
+.control:hover,
+:focus{
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+
+.game_img{
+    width: 30px;
+    height: auto;
+    cursor: pointer;
+    text-align: center;
+}
+
+@media screen and (max-width: 1024px){
+    .profile{
+        flex: 0 0 240px;
+        height: 190vh;
+        margin-left: 2rem;
+    }
+
+    .clock_games{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 428px){
+    .profile{
+        border-right: none;
+        display: flex;
+        flex-direction: row;
+        flex: 0 0 240px;
+        height: 190vh;
+        margin-left: 4em;
+    }
+}
+
+@media screen and (max-width: 390px){
+    .profile{
+        margin-left: 2em;
+    }
+}

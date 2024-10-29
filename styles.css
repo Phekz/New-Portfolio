@@ -1,0 +1,62 @@
+@import url(styles/nav.css);
+@import url(styles/aside.css);
+@import url(styles/main.css);
+@import url(styles/rside.css);
+@import url(styles/workpage.css);
+@import url(styles/resume.css);
+
+html {
+    scroll-behavior: smooth;
+    cursor: url(./imagens/arrow-pointer-solid.svg) auto;
+}
+
+:root{
+    --background_color: #000000;
+    --bg-color: #212121;
+    --letter_color:#FAF9F6;
+    --main_font: "Poppins", sans-serif;
+    --border_color: rgb(66, 65, 65);
+    --my_yellow: #ABF518;
+}
+
+body{
+    display: flex;
+    background-color: var(--background_color);
+    font-family: var(--main_font);
+    font-size: 16px;
+    font-weight: 500;
+    color: #FAF9F6;
+}
+
+@media screen and (max-width: 428px){
+    body{
+        display: flex;
+        flex-direction: column;
+        background-color: var(--background_color);
+        font-family: var(--main_font);
+        font-size: 16px;
+        font-weight: 500;
+        color: #FAF9F6;
+    }
+}
+
+#particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+}
+
+@keyframes glowing {
+    0% {
+        filter: drop-shadow(0 0 5px #abf518) drop-shadow(0 0 1px #abf518);
+    }
+    50% {
+        filter: drop-shadow(0 0 1px #abf518) drop-shadow(0 0 1px #abf518);
+    }
+    100% {
+        filter: drop-shadow(0 0 5px #abf518) drop-shadow(0 0 1px #abf518);
+    }
+}
